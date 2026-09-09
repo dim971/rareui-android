@@ -10,6 +10,7 @@ import io.github.dim971.rareui.showcase.entries.emojiReactionEntry
 import io.github.dim971.rareui.showcase.entries.folderEntry
 import io.github.dim971.rareui.showcase.entries.gitHubActivityEntry
 import io.github.dim971.rareui.showcase.entries.gooeyNavEntry
+import io.github.dim971.rareui.showcase.entries.gravityLettersEntry
 import io.github.dim971.rareui.showcase.entries.hookSidebarEntry
 import io.github.dim971.rareui.showcase.entries.matrixOrbEntry
 import io.github.dim971.rareui.showcase.entries.notificationBellEntry
@@ -67,6 +68,7 @@ val catalog: List<CatalogSection> =
                 codeBlockEntry,
                 folderEntry,
                 gitHubActivityEntry,
+                gravityLettersEntry,
                 stepPlayerEntry,
             ),
         ),
