@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import io.github.dim971.rareui.showcase.entries.animatedCounterEntry
 import io.github.dim971.rareui.showcase.entries.bounceSidebarEntry
 import io.github.dim971.rareui.showcase.entries.deleteButtonEntry
+import io.github.dim971.rareui.showcase.entries.durationPickerEntry
 import io.github.dim971.rareui.showcase.entries.emojiReactionEntry
 import io.github.dim971.rareui.showcase.entries.gitHubActivityEntry
 import io.github.dim971.rareui.showcase.entries.gooeyNavEntry
@@ -72,7 +73,10 @@ val catalog: List<CatalogSection> =
                 scrollProgressEntry,
             ),
         ),
-        CatalogSection("Inputs", listOf(deleteButtonEntry, otpInputEntry)),
+        CatalogSection(
+            "Inputs",
+            listOf(deleteButtonEntry, durationPickerEntry, otpInputEntry),
+        ),
         CatalogSection("Feedback", listOf(emojiReactionEntry, notificationBellEntry)),
     )
 
