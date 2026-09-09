@@ -44,7 +44,12 @@ android {
 // unreleased build.
 mavenPublishing {
     publishToMavenCentral()
-    signAllPublications()
+    // Signed only when there is something to sign with. Maven Central requires a signature
+    // and nothing else does, so demanding one unconditionally breaks both a local publish
+    // and JitPack, which builds this from source and has no key of ours.
+    if (providers.gradleProperty("signingInMemoryKey").isPresent) {
+        signAllPublications()
+    }
     coordinates(group.toString(), "rareui-compose", version.toString())
 
     pom {
