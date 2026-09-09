@@ -140,7 +140,7 @@ it.
 
 ## What is checked rather than trusted
 
-Two hundred and twenty-four tests, and none of them assert that an animation looks right.
+Two hundred and twenty-nine tests, and none of them assert that an animation looks right.
 They assert the things that can be wrong without looking wrong:
 
 - the counter's grouping, padding, rounding and wheel aiming

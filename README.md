@@ -80,7 +80,7 @@ dependencyResolutionManagement {
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("com.github.dim971:rareui-android:0.1.1")
+    implementation("com.github.dim971:rareui-android:0.2.0")
 }
 ```
 
@@ -200,7 +200,7 @@ than by eye. That is only worth something if the exceptions are written down, so
 [docs/fidelity.md](docs/fidelity.md) lists all of them: what could not come
 across, why, and what was done instead.
 
-The parts that can be checked exactly are checked: two hundred and twenty-four
+The parts that can be checked exactly are checked: two hundred and twenty-nine
 tests covering the grouping arithmetic, the field functions, the gooey seam's
 waist, the gravity height map, the ring alignment behind the path morph, the
 tokeniser, the colour ramp and the rest. None of them assert that an animation

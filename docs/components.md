@@ -59,7 +59,13 @@ over the grid and becomes a ranked list of repositories.
 ```kotlin
 GitHubActivity(contributions = days, repos = repositories, showsMonths = true)
 GitHubActivity(contributions = days, accent = Color(0xFFFC4C01), cellSize = 8.dp, months = 6)
+GitHubActivity(contributions = days, accentScale = listOf(dim, mid, bright, brightest))
 ```
+
+`accentScale` sets the levels yourself rather than shading one colour five ways: four
+colours are the four levels that have something in them, five or more set the empty level
+too. `expanded` and `onExpandedChange` control the footer, which otherwise keeps its own
+state.
 
 It takes its data rather than fetching it, and the year scrolls rather than being trimmed to
 fit. With no repositories there is no footer, since a footer that ranks nothing is worse
@@ -117,7 +123,7 @@ A placeholder that becomes a picture by dividing itself into it, a hundred and e
 busiest parts first.
 
 ```kotlin
-GridReveal(image = photo, caption = "Generating")
+GridReveal(image = photo, caption = "Generating", onRevealComplete = ::ready)
 GridReveal(progress = uploaded, aspect = 16f / 9f)
 ```
 
@@ -218,6 +224,7 @@ Three touching panels, an hours field, a minutes field and a pen that morphs int
 ```kotlin
 DurationPicker(value = duration, onValueChange = { duration = it }, onConfirm = ::schedule)
 DurationPicker(value = duration, onValueChange = { duration = it }, maxHours = 8, maxMinutes = 59)
+DurationPicker(value = duration, onValueChange = { duration = it }, defaultEditing = true)
 ```
 
 Typing past a limit clamps the field and gives it a nudge, so the refusal is felt rather
@@ -231,6 +238,7 @@ A row of boxes for a one time code, with characters that roll in and a caret tha
 OtpInput(code = code, onCodeChange = { code = it }, onComplete = ::verify)
 OtpInput(code = code, onCodeChange = { code = it }, length = 4, characterSet = OtpCharacterSet.ALPHANUMERIC)
 OtpInput(code = code, onCodeChange = { code = it }, status = OtpStatus.ERROR)
+OtpInput(code = code, onCodeChange = { code = it }, autoFocus = true)
 ```
 
 One text field backs the whole row, which is what makes autofill and paste work. Anything

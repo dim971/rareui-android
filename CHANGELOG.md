@@ -6,6 +6,29 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.2.0]
+
+Brings the components' surfaces back in line with upstream's props, after an
+audit that read every upstream prop list against the signature that ports it.
+
+### Added
+
+- `GitHubActivity` takes `accentScale`, a ramp of colours rather than one colour
+  shaded five ways. Four colours are the four levels that have something in
+  them, which is how GitHub's own scale is stated; five or more set the empty
+  level too.
+- `GitHubActivity` takes `expanded` and `onExpandedChange`, so the footer can be
+  controlled rather than only keeping its own state.
+- `GridReveal` takes `onRevealComplete`, which the iOS twin has had since it was
+  written. It fires once, and once the photograph is actually up rather than
+  when the split reaches the end.
+- `OtpInput` takes `autoFocus`.
+- `DurationPicker` takes `defaultEditing` and `onEditingChange`.
+- The showcase demonstrates the counter the way upstream's page does, with a
+  ruler you drag. The ruler is the demonstration and not the component: upstream
+  draws it on the page out of a range input and a row of spans.
+- Five more tests, over the colour ramp.
+
 ## [0.1.1]
 
 ### Fixed
@@ -82,6 +105,7 @@ about before reaching for a component:
   shared element API is still experimental and a published library should not
   make its callers opt in to that.
 
-[Unreleased]: https://github.com/dim971/rareui-android/compare/0.1.1...HEAD
+[Unreleased]: https://github.com/dim971/rareui-android/compare/0.2.0...HEAD
+[0.2.0]: https://github.com/dim971/rareui-android/releases/tag/0.2.0
 [0.1.1]: https://github.com/dim971/rareui-android/releases/tag/0.1.1
 [0.1.0]: https://github.com/dim971/rareui-android/releases/tag/0.1.0
