@@ -1,0 +1,18 @@
+Rare UI for Jetpack Compose
+===========================
+
+This library is a native Jetpack Compose port of Rare UI, a registry of
+animated React components for the web.
+
+    Rare UI: https://www.rareui.com
+    https://github.com/swamimalode07/rare-ui
+    Copyright (c) 2026 Swami Malode
+    Licensed under the MIT License
+
+Every component under rareui/src/main/kotlin/io/github/dim971/rareui/components
+is a port of the matching file in upstream's `components/ui` directory: the
+layout, the palette, the interaction model and the animation constants are
+taken from that source rather than reinvented.
+
+Its twin is Rare UI for SwiftUI, https://github.com/dim971/rareui-ios. The two
+are ports of the same original and are kept in step deliberately.

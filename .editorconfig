@@ -1,0 +1,20 @@
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.{kt,kts}]
+indent_size = 4
+indent_style = space
+max_line_length = 120
+
+# The Kotlin coding conventions carve out @Composable functions returning Unit:
+# they follow the class-naming convention, not the function one. ktlint's
+# function-naming rule needs telling.
+ktlint_function_naming_ignore_when_annotated_with = Composable
+
+[*.{yml,yaml,json,xml}]
+indent_size = 2
