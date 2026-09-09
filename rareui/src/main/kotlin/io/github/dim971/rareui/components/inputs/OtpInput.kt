@@ -62,6 +62,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.drawscope.clipRect
@@ -121,6 +123,7 @@ private const val RING_STAGGER_MILLIS = 50
  * @param status what the field is saying about the code.
  * @param mask whether to show bullets instead of the characters.
  * @param enabled whether the field can be typed into.
+ * @param autoFocus whether to take the keyboard as soon as the row appears.
  * @param onComplete called with the code once the last box is filled.
  */
 @Composable
@@ -134,6 +137,7 @@ public fun OtpInput(
     status: OtpStatus = OtpStatus.IDLE,
     mask: Boolean = false,
     enabled: Boolean = true,
+    autoFocus: Boolean = false,
     onComplete: ((String) -> Unit)? = null,
 ) {
     val colors = RareUiTheme.colors
@@ -146,6 +150,11 @@ public fun OtpInput(
 
     val interaction = remember { MutableInteractionSource() }
     val focused by interaction.collectIsFocusedAsState()
+    val focusRequester = remember { FocusRequester() }
+
+    LaunchedEffect(autoFocus, enabled) {
+        if (autoFocus && enabled) focusRequester.requestFocus()
+    }
     val showsCaret = focused && characters.size < boxes
 
     // Which way a character leaves: back down the way it came in when it was deleted, up
@@ -207,6 +216,7 @@ public fun OtpInput(
         onValueChange = { onCodeChange(otpAccepted(it, boxes, characterSet)) },
         modifier =
             modifier
+                .focusRequester(focusRequester)
                 .offset { IntOffset(shake.value.dp.roundToPx(), 0) }
                 .alpha(if (enabled) 1f else 0.5f)
                 .clearAndSetSemantics {

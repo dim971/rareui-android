@@ -165,6 +165,8 @@ private val IconBox = Size(24f, 24f)
  * @param hoursLabel the word after the hours field.
  * @param minutesLabel the word after the minutes field.
  * @param enabled whether the picker can be edited.
+ * @param defaultEditing whether it opens already being edited.
+ * @param onEditingChange called when the pen opens or closes it.
  * @param onConfirm called with the duration when the tick is pressed.
  */
 @Composable
@@ -178,6 +180,8 @@ public fun DurationPicker(
     hoursLabel: String = "Hr.",
     minutesLabel: String = "Min.",
     enabled: Boolean = true,
+    defaultEditing: Boolean = false,
+    onEditingChange: ((Boolean) -> Unit)? = null,
     onConfirm: ((DurationValue) -> Unit)? = null,
 ) {
     val colors = RareUiTheme.colors
@@ -185,7 +189,7 @@ public fun DurationPicker(
     val keyboard = LocalSoftwareKeyboardController.current
     val hoursFocus = remember { FocusRequester() }
 
-    var editing by remember { mutableStateOf(false) }
+    var editing by remember { mutableStateOf(defaultEditing) }
     var hoursText by remember { mutableStateOf("") }
     var minutesText by remember { mutableStateOf("") }
     val nudge = remember { Animatable(0f) }
@@ -289,6 +293,7 @@ public fun DurationPicker(
             onClick = {
                 val next = !editing
                 editing = next
+                onEditingChange?.invoke(next)
                 if (next) {
                     hoursFocus.requestFocus()
                 } else {

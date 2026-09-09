@@ -7,6 +7,7 @@
 package io.github.dim971.rareui.components.display
 
 import androidx.compose.runtime.Immutable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import java.time.LocalDate
@@ -50,6 +51,27 @@ internal fun gitHubLevelOpacity(level: Int): Float =
         4 -> 1f
         else -> 0f
     }
+
+/**
+ * The colour one cell is drawn in, given a scale of your own.
+ *
+ * Upstream takes either one colour, shaded by level, or a list of them. A list of four is
+ * the four levels that have anything in them, with an empty day left to show the cell
+ * underneath; a longer list sets every level including the empty one. A list too short for
+ * the level asked for repeats its last colour rather than falling off the end.
+ *
+ * @param level the day's level.
+ * @param scale the colours to draw from.
+ * @return the colour, or transparent for an empty day the scale does not name.
+ */
+internal fun gitHubLevelInk(
+    level: Int,
+    scale: List<Color>,
+): Color {
+    if (scale.isEmpty()) return Color.Transparent
+    val colours = if (scale.size > 4) scale else listOf(Color.Transparent) + scale
+    return colours.getOrNull(level.coerceIn(0, 4)) ?: colours.last()
+}
 
 /**
  * The gap between two cells, which grows with them.

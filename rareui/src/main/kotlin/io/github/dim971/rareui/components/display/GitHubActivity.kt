@@ -117,7 +117,12 @@ private val FooterRoom = 52.dp
  * @param contributions one entry per day, oldest first.
  * @param modifier the modifier to apply.
  * @param repos the repositories the contributions went to, in whatever order you want them ranked.
- * @param accent the colour the cells are drawn in. Defaults to GitHub's green.
+ * @param accent the colour the cells are drawn in, shaded by level. Defaults to GitHub's green.
+ * @param accentScale one colour per level, for a ramp of your own rather than one colour
+ *   shaded five ways. Four colours are the four levels that have something in them; five or
+ *   more set the empty level too. Wins over [accent] when it is not empty.
+ * @param expanded whether the footer is open. Leave it out and the component keeps its own.
+ * @param onExpandedChange called when the footer is opened or closed.
  * @param cellSize how large one cell is.
  * @param months how many months to show.
  * @param label the footer's wording.
@@ -129,10 +134,13 @@ public fun GitHubActivity(
     modifier: Modifier = Modifier,
     repos: List<GitHubRepoContribution> = emptyList(),
     accent: Color = GitHubGreen,
+    accentScale: List<Color> = emptyList(),
     cellSize: Dp = 11.dp,
     months: Int = 12,
     label: String = "Top contributions in:",
     showsMonths: Boolean = false,
+    expanded: Boolean? = null,
+    onExpandedChange: ((Boolean) -> Unit)? = null,
 ) {
     val colors = RareUiTheme.colors
     val reduceMotion = rememberRareUiReduceMotion()
@@ -218,7 +226,9 @@ public fun GitHubActivity(
                             },
                         verticalArrangement = Arrangement.spacedBy(gap),
                     ) {
-                        week.forEach { day -> ContributionCell(day, cellSize, accent, colors) }
+                        week.forEach { day ->
+                            ContributionCell(day, cellSize, accent, accentScale, colors)
+                        }
                     }
                 }
             }
@@ -232,6 +242,8 @@ public fun GitHubActivity(
                 label = label,
                 colors = colors,
                 reduceMotion = reduceMotion,
+                expanded = expanded,
+                onExpandedChange = onExpandedChange,
                 modifier = Modifier.align(Alignment.BottomCenter).padding(12.dp),
             )
         }
@@ -244,6 +256,7 @@ private fun ContributionCell(
     day: GitHubContribution,
     cellSize: Dp,
     accent: Color,
+    accentScale: List<Color>,
     colors: RareUiColors,
 ) {
     val noun = if (day.count == 1) "contribution" else "contributions"
@@ -254,8 +267,14 @@ private fun ContributionCell(
             Modifier
                 .size(cellSize)
                 .background(colors.foreground.copy(alpha = 0.08f), shape)
-                .background(accent.copy(alpha = gitHubLevelOpacity(day.level)), shape)
-                .semantics {
+                .background(
+                    if (accentScale.isEmpty()) {
+                        accent.copy(alpha = gitHubLevelOpacity(day.level))
+                    } else {
+                        gitHubLevelInk(day.level, accentScale)
+                    },
+                    shape,
+                ).semantics {
                     contentDescription =
                         "${day.count} $noun on ${day.date.format(GitHubDayFormat)}"
                 },
@@ -346,17 +365,28 @@ internal fun gitHubMonthLabel(
 
 /** The footer, which is either a line of avatars or the ranked list they open into. */
 @Composable
+@Suppress("LongParameterList")
 private fun ActivityFooter(
     repos: List<GitHubRepoContribution>,
     label: String,
     colors: RareUiColors,
     reduceMotion: Boolean,
+    expanded: Boolean?,
+    onExpandedChange: ((Boolean) -> Unit)?,
     modifier: Modifier = Modifier,
 ) {
-    var expanded by remember { mutableStateOf(false) }
+    // Controlled when the caller says so, and keeping its own when it does not, which is
+    // the same choice upstream offers through `open` and `defaultOpen`.
+    var uncontrolled by remember { mutableStateOf(false) }
+    val open = expanded ?: uncontrolled
+
+    fun setOpen(next: Boolean) {
+        uncontrolled = next
+        onExpandedChange?.invoke(next)
+    }
 
     AnimatedContent(
-        targetState = expanded,
+        targetState = open,
         modifier = modifier,
         transitionSpec = {
             if (reduceMotion) {
@@ -379,7 +409,7 @@ private fun ActivityFooter(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     FooterLabel(label, colors, Modifier.weight(1f))
                     Chevron(expanded = true, colors = colors, reduceMotion = reduceMotion) {
-                        expanded = false
+                        setOpen(false)
                     }
                 }
                 repos.forEach { repo ->
@@ -424,7 +454,7 @@ private fun ActivityFooter(
                     repos.take(STACK_LIMIT).forEach { repo -> RepoAvatar(repo, colors) }
                 }
                 Chevron(expanded = false, colors = colors, reduceMotion = reduceMotion) {
-                    expanded = true
+                    setOpen(true)
                 }
             }
         }

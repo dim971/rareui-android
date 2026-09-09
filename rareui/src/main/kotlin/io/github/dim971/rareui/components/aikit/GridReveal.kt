@@ -236,6 +236,7 @@ internal class GridRevealScene {
  * @param aspect the frame's width over its height.
  * @param caption a line shown over the grid while it works.
  * @param estimatedDuration how long the work is expected to take, in seconds.
+ * @param onRevealComplete called once the picture has fully arrived.
  */
 @Composable
 @Suppress("LongParameterList")
@@ -246,6 +247,7 @@ public fun GridReveal(
     aspect: Float = 1f,
     caption: String? = null,
     estimatedDuration: Double = 6.0,
+    onRevealComplete: (() -> Unit)? = null,
 ) {
     val dark = isSystemInDarkTheme()
     val reduceMotion = rememberRareUiReduceMotion()
@@ -258,10 +260,12 @@ public fun GridReveal(
         if (reduceMotion) {
             scene.finish()
             painted = scene.advance(0L, 0.0, 1.0, estimatedDuration, image != null, true)
+            if (image != null) onRevealComplete?.invoke()
             return@LaunchedEffect
         }
 
         var started = 0L
+        var announced = false
         while (true) {
             val now = withFrameNanos { it }
             if (started == 0L) started = now
@@ -274,6 +278,13 @@ public fun GridReveal(
                     hasImage = image != null,
                     reduceMotion = false,
                 )
+
+            // Once, and only once the photograph is actually up rather than when the split
+            // reaches the end: the picture arrives over the last seven hundredths of it.
+            if (!announced && image != null && painted.split >= 0.999 && painted.fade >= 0.999) {
+                announced = true
+                onRevealComplete?.invoke()
+            }
         }
     }
 

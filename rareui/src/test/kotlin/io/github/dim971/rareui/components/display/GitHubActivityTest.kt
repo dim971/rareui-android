@@ -6,6 +6,7 @@
 
 package io.github.dim971.rareui.components.display
 
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNull
@@ -36,6 +37,48 @@ class GitHubLevelTest {
     fun `a level outside the range is brought back into it`() {
         assertEquals(gitHubLevelOpacity(0), gitHubLevelOpacity(-3), 0f)
         assertEquals(gitHubLevelOpacity(4), gitHubLevelOpacity(99), 0f)
+    }
+}
+
+class GitHubAccentScaleTest {
+    private val ramp =
+        listOf(Color(0xFF0E4429), Color(0xFF006D32), Color(0xFF26A641), Color(0xFF39D353))
+
+    @Test
+    fun `four colours are the four levels that have something in them`() {
+        // An empty day is left to show the cell underneath, exactly as it is with a single
+        // accent shaded five ways.
+        assertEquals(Color.Transparent, gitHubLevelInk(0, ramp))
+        assertEquals(ramp[0], gitHubLevelInk(1, ramp))
+        assertEquals(ramp[3], gitHubLevelInk(4, ramp))
+    }
+
+    @Test
+    fun `five or more set the empty level too`() {
+        val full = listOf(Color.White) + ramp
+        assertEquals(Color.White, gitHubLevelInk(0, full))
+        assertEquals(ramp[0], gitHubLevelInk(1, full))
+        assertEquals(ramp[3], gitHubLevelInk(4, full))
+    }
+
+    @Test
+    fun `a level outside the range is brought back into it`() {
+        assertEquals(gitHubLevelInk(0, ramp), gitHubLevelInk(-2, ramp))
+        assertEquals(gitHubLevelInk(4, ramp), gitHubLevelInk(99, ramp))
+    }
+
+    @Test
+    fun `a scale too short repeats its last colour rather than falling off the end`() {
+        val two = listOf(Color.Red, Color.Blue)
+        assertEquals(Color.Transparent, gitHubLevelInk(0, two))
+        assertEquals(Color.Red, gitHubLevelInk(1, two))
+        assertEquals(Color.Blue, gitHubLevelInk(2, two))
+        assertEquals(Color.Blue, gitHubLevelInk(4, two))
+    }
+
+    @Test
+    fun `no scale at all draws nothing rather than throwing`() {
+        assertEquals(Color.Transparent, gitHubLevelInk(3, emptyList()))
     }
 }
 

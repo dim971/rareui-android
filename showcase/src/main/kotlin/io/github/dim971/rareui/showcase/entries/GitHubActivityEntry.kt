@@ -32,6 +32,29 @@ val gitHubActivityEntry: CatalogEntry =
                     )
                 },
                 Demo(
+                    title = "A ramp of your own",
+                    note =
+                        "One colour shaded five ways is the default. Four colours set the four " +
+                            "levels that have something in them, which is how GitHub's own scale " +
+                            "is stated.",
+                    code =
+                        "GitHubActivity(contributions = days,\n" +
+                            "    accentScale = listOf(Color(0xFF0E4429), Color(0xFF006D32),\n" +
+                            "        Color(0xFF26A641), Color(0xFF39D353)))",
+                ) {
+                    GitHubActivity(
+                        contributions = SampleActivityYear,
+                        accentScale =
+                            listOf(
+                                Color(0xFF0E4429),
+                                Color(0xFF006D32),
+                                Color(0xFF26A641),
+                                Color(0xFF39D353),
+                            ),
+                        months = 6,
+                    )
+                },
+                Demo(
                     title = "Any accent, any size",
                     code =
                         "GitHubActivity(contributions = days, accent = Color(0xFFFC4C01),\n" +
