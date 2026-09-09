@@ -7,6 +7,7 @@ import io.github.dim971.rareui.showcase.entries.codeBlockEntry
 import io.github.dim971.rareui.showcase.entries.deleteButtonEntry
 import io.github.dim971.rareui.showcase.entries.durationPickerEntry
 import io.github.dim971.rareui.showcase.entries.emojiReactionEntry
+import io.github.dim971.rareui.showcase.entries.fluidOrbEntry
 import io.github.dim971.rareui.showcase.entries.folderEntry
 import io.github.dim971.rareui.showcase.entries.gitHubActivityEntry
 import io.github.dim971.rareui.showcase.entries.gooeyNavEntry
@@ -73,7 +74,7 @@ val catalog: List<CatalogSection> =
                 stepPlayerEntry,
             ),
         ),
-        CatalogSection("AI Kit", listOf(gridRevealEntry, matrixOrbEntry)),
+        CatalogSection("AI Kit", listOf(fluidOrbEntry, gridRevealEntry, matrixOrbEntry)),
         CatalogSection(
             "Navigation",
             listOf(
