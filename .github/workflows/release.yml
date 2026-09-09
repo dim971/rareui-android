@@ -1,0 +1,46 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "[0-9]+.[0-9]+.[0-9]+"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Publish the release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The changelog is the release notes. Keeping them in one place means they cannot
+      # disagree, and it means the notes are written before the tag rather than after it.
+      #
+      # They go to a file rather than into a step output, and the file is handed to `gh`
+      # rather than interpolated into its arguments. Release notes are prose: they contain
+      # backticks, and a backtick inside a double quoted shell string is a command to run,
+      # not a character to print. The first version of the twin's workflow ate every code
+      # span in the notes, which is the harmless end of what that mistake can do.
+      - name: Read the changelog
+        run: |
+          version="${GITHUB_REF_NAME}"
+          awk -v v="$version" '
+            $0 ~ "^## \\[" v "\\]" { found = 1; next }
+            found && /^## \[/ { exit }
+            found { print }
+          ' CHANGELOG.md > release-notes.md
+
+          if [ ! -s release-notes.md ] || ! grep -q '[^[:space:]]' release-notes.md; then
+            echo "::error::CHANGELOG.md has no section for $version"
+            exit 1
+          fi
+
+      - name: Create the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --title "$GITHUB_REF_NAME" \
+            --notes-file release-notes.md

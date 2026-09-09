@@ -1,0 +1,14 @@
+version: 2
+updates:
+  # An action pinned to a major version still moves under you when that major is retagged.
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+
+  # Compose, the Kotlin plugin and the Android plugin. The library depends only on Compose
+  # Foundation, so this list is short, and it is exactly the list a consumer inherits.
+  - package-ecosystem: gradle
+    directory: /
+    schedule:
+      interval: monthly

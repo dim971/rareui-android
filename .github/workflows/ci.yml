@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  library:
+    name: Library
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # The em dash is banned in this repository; see CLAUDE.md.
+      - name: No em dash
+        run: |
+          if git grep -In $'\xe2\x80\x94' -- .; then
+            echo "::error::U+2014 found; use a comma, a colon or a full stop"
+            exit 1
+          fi
+
+      # JitPack builds this on a JDK of its own, pinned in jitpack.yml. Keeping the two
+      # the same means a green build here says something about the published artifact.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Show toolchain
+        run: ./gradlew --version
+
+      # The maths behind the components is pinned to upstream's own numbers; a failure
+      # here means the port has drifted. See docs/fidelity.md.
+      - name: Test
+        run: ./gradlew :rareui:testDebugUnitTest
+
+      - name: Lint
+        run: ./gradlew ktlintCheck lint
+
+      - name: Fail on warnings
+        run: |
+          ./gradlew clean :rareui:assembleRelease :showcase:assembleDebug 2>&1 | tee build.log
+          if grep -E "^w: " build.log; then
+            echo "::error::the build emitted warnings"
+            exit 1
+          fi
+
+      # A library nobody can resolve is not published. This is the same route JitPack
+      # takes, run against the commit rather than against the tag.
+      - name: Publish to a local repository
+        run: ./gradlew :rareui:publishToMavenLocal
+
+      - name: Upload the test report
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-report
+          path: rareui/build/reports/tests/
