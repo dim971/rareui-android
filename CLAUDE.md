@@ -78,9 +78,14 @@ adb shell am start -n io.github.dim971.rareui.showcase/.MainActivity
 The showcase opens straight to one component when told which:
 
 ```sh
-adb shell am start -n io.github.dim971.rareui.showcase/.MainActivity \
-    -e component "Gravity Letters"
+adb shell "am start -n io.github.dim971.rareui.showcase/.MainActivity \
+    -e component 'Gravity Letters'"
 ```
+
+The quoting matters. `adb shell` re-parses the command on the device, so a name
+with a space in it has to survive two shells: quote the whole command and use
+single quotes inside it. Written the obvious way the extra arrives as `Gravity`
+and the app opens on the catalog with no hint that anything went wrong.
 
 Screenshots: `adb exec-out screencap -p > out.png`.
 
