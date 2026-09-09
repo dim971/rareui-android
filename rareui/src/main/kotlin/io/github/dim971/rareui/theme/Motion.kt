@@ -6,7 +6,12 @@
  * hand in nineteen components is how a port drifts.
  *
  *   Motion `{ stiffness, damping, mass }`  ->  rareUiSpring(stiffness, damping, mass)
- *   Motion `{ duration, bounce }`          ->  rareUiSpring(duration, bounce)
+ *   Motion `{ visualDuration, bounce }`    ->  rareUiVisualSpring(duration, bounce)
+
+ * The two have separate names on purpose. As overloads of one name they were both
+ * applicable to two positional floats, Kotlin quietly resolved to the shorter one, and a
+ * spring of 500 and 34 became a five hundred second duration that crawled. Two names
+ * cannot be confused for one another by an overload rule.
  *   Motion `ease: [a, b, c, d]`            ->  CubicBezierEasing(a, b, c, d)
  *
  * Component specific constants do not live here. They live next to the component that
@@ -60,7 +65,7 @@ public fun <T> rareUiSpring(
  * @param bounce how much it overshoots, in `0..1`.
  * @param visibilityThreshold how close counts as arrived.
  */
-public fun <T> rareUiSpring(
+public fun <T> rareUiVisualSpring(
     durationSeconds: Float,
     bounce: Float,
     visibilityThreshold: T? = null,

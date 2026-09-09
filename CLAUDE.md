@@ -30,9 +30,12 @@ Motion for React do not state a spring the same way:
 - Motion gives `{ stiffness, damping, mass }`. Compose wants a **damping
   ratio**, which is `damping / (2 * sqrt(stiffness * mass))`. There is a helper
   for it in `theme/Motion.kt`; use it rather than converting by hand.
-- Motion's newer `{ duration, bounce }` has no direct counterpart. A bounce of
-  `b` is a damping ratio of `1 - b`, and the duration is perceptual rather than
-  literal, so the stiffness is chosen to match.
+- Motion's newer `{ visualDuration, bounce }` has no direct counterpart. A bounce
+  of `b` is a damping ratio of `1 - b`, and the duration is perceptual rather
+  than literal, so the stiffness is chosen to match. `rareUiVisualSpring` does
+  it. It is a second name rather than an overload of the first because two
+  positional floats fit both, and picking the wrong one silently is a bug that
+  looks like a rendering fault rather than a conversion mistake.
 - Motion's cubic beziers are `CubicBezierEasing`. Control points outside `0..1`
   are allowed on both sides, which matters for the overshooting curves.
 

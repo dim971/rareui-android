@@ -41,7 +41,7 @@ import androidx.compose.ui.text.rememberTextMeasurer
 import androidx.compose.ui.text.style.TextAlign
 import io.github.dim971.rareui.core.rareUiMod
 import io.github.dim971.rareui.theme.RareUiTheme
-import io.github.dim971.rareui.theme.rareUiSpring
+import io.github.dim971.rareui.theme.rareUiVisualSpring
 import io.github.dim971.rareui.theme.rememberRareUiReduceMotion
 
 /**
@@ -217,7 +217,7 @@ private fun DigitWheel(
         goal = wheelGoal(goal, position.value.toDouble(), digit, heading)
         position.animateTo(
             targetValue = goal.toFloat(),
-            animationSpec = rareUiSpring(pace.toFloat(), WHEEL_BOUNCE),
+            animationSpec = rareUiVisualSpring(pace.toFloat(), WHEEL_BOUNCE),
         )
     }
 
