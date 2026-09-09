@@ -6,6 +6,7 @@ import io.github.dim971.rareui.showcase.entries.bounceSidebarEntry
 import io.github.dim971.rareui.showcase.entries.deleteButtonEntry
 import io.github.dim971.rareui.showcase.entries.durationPickerEntry
 import io.github.dim971.rareui.showcase.entries.emojiReactionEntry
+import io.github.dim971.rareui.showcase.entries.folderEntry
 import io.github.dim971.rareui.showcase.entries.gitHubActivityEntry
 import io.github.dim971.rareui.showcase.entries.gooeyNavEntry
 import io.github.dim971.rareui.showcase.entries.hookSidebarEntry
@@ -60,7 +61,7 @@ val catalog: List<CatalogSection> =
     listOf(
         CatalogSection(
             "Display",
-            listOf(animatedCounterEntry, gitHubActivityEntry, stepPlayerEntry),
+            listOf(animatedCounterEntry, folderEntry, gitHubActivityEntry, stepPlayerEntry),
         ),
         CatalogSection("AI Kit", listOf(matrixOrbEntry)),
         CatalogSection(
