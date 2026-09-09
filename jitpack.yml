@@ -1,0 +1,5 @@
+# JitPack still defaults to an older JDK than this project's toolchain, and the
+# build fails at the Gradle daemon rather than anywhere informative if it is
+# left to choose.
+jdk:
+  - openjdk21

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- The app draws everything itself, so the platform theme only has to get
+         out of the way and let the window edge to edge. -->
+    <style name="Theme.RareUiShowcase" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
