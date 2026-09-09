@@ -1,6 +1,7 @@
 package io.github.dim971.rareui.showcase
 
 import androidx.compose.runtime.Composable
+import io.github.dim971.rareui.showcase.entries.animatedCounterEntry
 
 /** One demo on a component's screen: a live sample and the code behind it. */
 class Demo(
@@ -44,7 +45,7 @@ class CatalogSection(
  */
 val catalog: List<CatalogSection> =
     listOf(
-        CatalogSection("Display", emptyList()),
+        CatalogSection("Display", listOf(animatedCounterEntry)),
         CatalogSection("AI Kit", emptyList()),
         CatalogSection("Navigation", emptyList()),
         CatalogSection("Inputs", emptyList()),
