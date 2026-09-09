@@ -10,6 +10,7 @@ import io.github.dim971.rareui.showcase.entries.hookSidebarEntry
 import io.github.dim971.rareui.showcase.entries.matrixOrbEntry
 import io.github.dim971.rareui.showcase.entries.notificationBellEntry
 import io.github.dim971.rareui.showcase.entries.otpInputEntry
+import io.github.dim971.rareui.showcase.entries.proximitySidebarEntry
 
 /** One demo on a component's screen: a live sample and the code behind it. */
 class Demo(
@@ -55,7 +56,10 @@ val catalog: List<CatalogSection> =
     listOf(
         CatalogSection("Display", listOf(animatedCounterEntry, gitHubActivityEntry)),
         CatalogSection("AI Kit", listOf(matrixOrbEntry)),
-        CatalogSection("Navigation", listOf(bounceSidebarEntry, hookSidebarEntry, gooeyNavEntry)),
+        CatalogSection(
+            "Navigation",
+            listOf(bounceSidebarEntry, hookSidebarEntry, gooeyNavEntry, proximitySidebarEntry),
+        ),
         CatalogSection("Inputs", listOf(otpInputEntry)),
         CatalogSection("Feedback", listOf(emojiReactionEntry, notificationBellEntry)),
     )
