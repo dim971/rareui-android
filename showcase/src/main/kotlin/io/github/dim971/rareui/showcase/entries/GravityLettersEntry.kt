@@ -3,6 +3,7 @@ package io.github.dim971.rareui.showcase.entries
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.Modifier
@@ -56,8 +57,10 @@ val gravityLettersEntry: CatalogEntry =
                 },
             ),
     ) {
+        // Sized rather than filled: the catalog row puts the preview beside the name, and
+        // a preview that takes the whole width leaves the name one letter wide.
         GravityLetters(
-            modifier = Modifier.fillMaxWidth().height(80.dp),
+            modifier = Modifier.size(width = 120.dp, height = 80.dp),
             glyphs = GravityGlyphs.NUMBERS,
             size = 14.dp,
         )

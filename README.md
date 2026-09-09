@@ -14,6 +14,7 @@ drags its clapper behind it.
 [![Kotlin 2.4](https://img.shields.io/badge/Kotlin-2.4-7F52FF.svg)](https://kotlinlang.org)
 [![minSdk 26](https://img.shields.io/badge/minSdk-26-3DDC84.svg)](#requirements)
 [![Compose](https://img.shields.io/badge/Jetpack%20Compose-Foundation-4285F4.svg)](https://developer.android.com/jetpack/compose)
+[![JitPack](https://jitpack.io/v/dim971/rareui-android.svg)](https://jitpack.io/#dim971/rareui-android)
 [![Licence](https://img.shields.io/badge/licence-MIT-blue.svg)](LICENSE)
 
 </div>
