@@ -2,6 +2,7 @@ package io.github.dim971.rareui.showcase
 
 import androidx.compose.runtime.Composable
 import io.github.dim971.rareui.showcase.entries.animatedCounterEntry
+import io.github.dim971.rareui.showcase.entries.bounceSidebarEntry
 import io.github.dim971.rareui.showcase.entries.gooeyNavEntry
 import io.github.dim971.rareui.showcase.entries.matrixOrbEntry
 
@@ -49,7 +50,7 @@ val catalog: List<CatalogSection> =
     listOf(
         CatalogSection("Display", listOf(animatedCounterEntry)),
         CatalogSection("AI Kit", listOf(matrixOrbEntry)),
-        CatalogSection("Navigation", listOf(gooeyNavEntry)),
+        CatalogSection("Navigation", listOf(bounceSidebarEntry, gooeyNavEntry)),
         CatalogSection("Inputs", emptyList()),
         CatalogSection("Feedback", emptyList()),
     )
