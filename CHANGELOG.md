@@ -6,6 +6,17 @@ adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [0.1.1]
+
+### Fixed
+
+- The published library can be resolved. In 0.1.0 the Compose bill of materials
+  was declared as an implementation dependency while Compose itself was exposed
+  through `api`, so the published metadata carried `androidx.compose.foundation`
+  and `androidx.compose.ui` with no version at all and every consumer failed
+  with `Could not find androidx.compose.foundation:foundation:`. Use this
+  version rather than 0.1.0.
+
 ## [0.1.0]
 
 First release. A Jetpack Compose port of [Rare UI](https://www.rareui.com), the
@@ -71,5 +82,6 @@ about before reaching for a component:
   shared element API is still experimental and a published library should not
   make its callers opt in to that.
 
-[Unreleased]: https://github.com/dim971/rareui-android/compare/0.1.0...HEAD
+[Unreleased]: https://github.com/dim971/rareui-android/compare/0.1.1...HEAD
+[0.1.1]: https://github.com/dim971/rareui-android/releases/tag/0.1.1
 [0.1.0]: https://github.com/dim971/rareui-android/releases/tag/0.1.0

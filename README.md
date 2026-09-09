@@ -79,7 +79,7 @@ dependencyResolutionManagement {
 ```kotlin
 // build.gradle.kts
 dependencies {
-    implementation("com.github.dim971:rareui-android:0.1.0")
+    implementation("com.github.dim971:rareui-android:0.1.1")
 }
 ```
 

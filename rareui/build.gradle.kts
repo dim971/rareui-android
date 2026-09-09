@@ -8,7 +8,7 @@ plugins {
     alias(libs.plugins.maven.publish)
 }
 
-version = "0.1.0"
+version = "0.1.1"
 group = "io.github.dim971"
 
 android {
@@ -90,7 +90,11 @@ tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach 
 }
 
 dependencies {
-    implementation(platform(libs.compose.bom))
+    // The platform travels with the API rather than behind it. Compose is exposed through
+    // `api`, so a consumer sees those dependencies; declared as `implementation` the bill
+    // of materials stays behind and they arrive with no version at all, which is a library
+    // nobody can resolve.
+    api(platform(libs.compose.bom))
     api(libs.compose.foundation)
     api(libs.compose.ui)
     implementation(libs.compose.ui.graphics)
